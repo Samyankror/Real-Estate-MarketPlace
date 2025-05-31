@@ -1,6 +1,6 @@
 import React from "react";
 import {FaSearch} from 'react-icons/fa'
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -9,10 +9,10 @@ function Header(){
     const {currUser} = useSelector(state=>state.user);
     const [searchTerm,setSearchTerm] = useState('');
     const navigate = useNavigate();
-
+     const location = useLocation()
     const handleSubmit = (e)=>{
         e.preventDefault();
-        const urlParams = new URLSearchParams(window.location.search);
+        const urlParams = new URLSearchParams(location.search);
         urlParams.set('searchTerm',searchTerm);
         const searchQuery = urlParams.toString();
        navigate(`/search?${searchQuery}`)
@@ -25,6 +25,7 @@ function Header(){
       setSearchTerm(searchTermFromUrl);
     }
   }, [location.search]);
+
     return(
         <header className='bg-slate-200'>
             <div className = "flex justify-between items-center max-w-6xl mx-auto p-3">
